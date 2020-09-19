@@ -1,8 +1,10 @@
+#:kivy 2.0.0
+
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 
-Builder.load_file('design.kv')
+Builder.load_file('C:\\Users\\Suvashan\\Desktop\\stm32\PythonProjects\\Mobile Mood App\\design.kv')
 
 class LoginScreen(Screen):          #Third highest priority
     def signup(self):
