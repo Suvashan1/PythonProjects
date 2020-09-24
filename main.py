@@ -11,6 +11,14 @@ class LoginScreen(Screen):          #Third highest priority
     def sign_up(self):
         self.manager.current = "signup_screen"   #name of SignUpScreen is used when the sign-up button is pressed
                                                  #the sign_up function is called from the button press
+    def log_in(self, name, passw):
+        with open("C:\\Users\\Suvashan\\Desktop\\PythonProjects\\user.json") as file:
+                users1 = json.load(file)
+        if name in users1 and users1[name]['password'] == passw:
+            self.manager.current = "signin_success"
+        else:
+            self.ids.login_wrong.text = "Wrong username or password"
+
 
 
 class SignUpScreen(Screen):             #Instance of Screen, used to initialize the sign-up screen
@@ -26,6 +34,12 @@ class SignUpScreen(Screen):             #Instance of Screen, used to initialize 
 class SignUpSuccess(Screen):
     def user_enter(self):
         self.manager.current = "login_screen"
+
+class SigninSuccess(Screen):
+    def log_out(self):
+        self.manager.transition.direction = "right"
+        self.manager.current = "login_screen"
+
 
 class RootWidget(ScreenManager):   #Parent creation of the app object        
     pass
