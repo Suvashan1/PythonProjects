@@ -4,32 +4,49 @@
         cols: 1
         GridLayout:
             cols: 1
+            padding: 15, 15             #spacing between grid layout and structures 
+            spacing: 20, 20             #spacing between the the label, textinputs and button (the structures itself)
             Label:
                 text: "User Login"
+                font_size: '20sp'       #font size increased of the label
             TextInput:
                 id: username
                 hint_text: "Username"
             TextInput:
                 id: password
+                password: True              #masks the passwords characters as stars
                 hint_text: "Password"
-            Button:
-                text: "Login"
-                on_press: root.log_in(root.ids.username.text, root.ids.password.text)
+            RelativeLayout:
+                Button:
+                    text: "Login"
+                    on_press: root.log_in(root.ids.username.text, root.ids.password.text)
+                    size_hint: 0.3, 0.5 #the button will have 0.5 of its initial height, in the grid 
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.6}
             Label:
                 id: login_wrong
                 text: ""
         GridLayout:
-            cols: 2
+            cols: 2                         #The size_hint of this grid allows the login button to breathe as it isnt squeezed by the second Grid
+            size_hint: 0.2, 0.2             #This allocates 20% of the space of the initial GridLayout to the two buttons
+            padding: 10, 10
+            spacing: 10, 0                  #10 pixels of space, between buttons
             Button: 
                 text: "Forgot Password"
+                background_color: 1, 1, 1, 0        #RGB and opacity (4 parameters for each colour and opcaity, and since we want a black background, all colours will have 1:1:1)
+                opacity: 1 if self.state == 'normal' else 0.5
+                color: 1, 0.5, 0.6, 1
             Button:
                 text:"Sign up"
                 on_press: root.sign_up()
-
+                background_color: 1, 1, 1, 0
+                opacity: 1 if self.state == 'normal' else 0.5
+                color: 1, 0.5, 0.6, 1
 #   SignUpScreen will be next for user to input details
 <SignUpScreen>:
     GridLayout:
         cols: 1
+        padding: 20, 20
+        spacing: 15, 15
         Label: 
             text: "Sign up"
         TextInput:
@@ -52,21 +69,31 @@
 <SigninSuccess>:
     GridLayout:
         cols: 1
-        Button:
-            text: "Sign out"
-            on_press: log_out()
-        Label:
-            text: "How do you feel"
+        padding: 30, 30
+        spacing: 30, 30
+        RelativeLayout:
+            ImageButton:
+                source: "C:\\Users\\Suvashan\\Desktop\\PythonProjects\\logout_hover.png" if self.hovered else "C:\\Users\\Suvashan\\Desktop\\PythonProjects\\logout_nothover.png"
+                on_press: log_out()
+                size_hint: 0.35, 0.40
+                pos_hint: {'center_x': 0.93, 'center_y': 0.8} #We need a relative_layout to implement a positional hint
+        RelativeLayout:    
+            Label:
+                text: "How do you feel"
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
         TextInput:
             id: feels
             hint_text: "Happy? Sad?"
         Button:
             text: "Enlighen me"
             on_press: root.enlighten(root.ids.feels.text)
-        Label:
-            id: help
-            text:""
-
+        ScrollView:
+            Label:
+                id: help
+                text:""
+                text_size: self.width, None      #the text in this label will be confined to the widget
+                size_hint_y: None
+                height: self.texture_size[1]      #height is 2nd element, and width is 1st. The height is dynamically changing to text
 <RootWidget>:
     LoginScreen:
         name: "login_screen"

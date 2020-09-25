@@ -1,7 +1,10 @@
 from datetime import datetime
 from pathlib import Path
 import json, glob, random
+from hoverable import HoverBehavior
 from kivy.app import App
+from kivy.uix.image import Image
+from kivy.uix.behaviors import ButtonBehavior
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 
@@ -50,6 +53,8 @@ class SigninSuccess(Screen):
                 quotes = file.readlines()
             self.ids.help.text = random.choice(quotes)
 
+class ImageButton(HoverBehavior, Image, ButtonBehavior):
+    pass
 
 class RootWidget(ScreenManager):   #Parent creation of the app object        
     pass
