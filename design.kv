@@ -58,11 +58,13 @@
         Label:
             text: "How do you feel"
         TextInput:
+            id: feels
             hint_text: "Happy? Sad?"
         Button:
             text: "Enlighen me"
-            on_press: root.enlighten()
+            on_press: root.enlighten(root.ids.feels.text)
         Label:
+            id: help
             text:""
 
 <RootWidget>:

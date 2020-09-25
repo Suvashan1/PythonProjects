@@ -1,11 +1,12 @@
 from datetime import datetime
-import json
+from pathlib import Path
+import json, glob, random
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 
 
-Builder.load_file('C:\\Users\\Suvashan\\Documents\\Python\\design.kv')
+Builder.load_file('C:\\Users\\Suvashan\\Desktop\\PythonProjects\\design.kv')
 
 class LoginScreen(Screen):          #Third highest priority
     def sign_up(self):
@@ -13,8 +14,8 @@ class LoginScreen(Screen):          #Third highest priority
                                                  #the sign_up function is called from the button press
     def log_in(self, name, passw):
         with open("C:\\Users\\Suvashan\\Desktop\\PythonProjects\\user.json") as file:
-                users1 = json.load(file)
-        if name in users1 and users1[name]['password'] == passw:
+                users = json.load(file)
+        if (name in users and users[name]['password'] == passw):
             self.manager.current = "signin_success"
         else:
             self.ids.login_wrong.text = "Wrong username or password"
@@ -39,6 +40,15 @@ class SigninSuccess(Screen):
     def log_out(self):
         self.manager.transition.direction = "right"
         self.manager.current = "login_screen"
+
+    def enlighten(self, feeling):
+        feeling = feeling.lower()
+        all_files = glob.glob("C:\\Users\\Suvashan\\Desktop\\PythonProjects\\Files\*txt")
+        all_files = [Path(filename).stem for filename in all_files]
+        if feeling in all_files:
+            with open(f"C:\\Users\\Suvashan\\Desktop\\PythonProjects\\Files//{feeling}.txt", encoding="utf8") as file:
+                quotes = file.readlines()
+            self.ids.help.text = random.choice(quotes)
 
 
 class RootWidget(ScreenManager):   #Parent creation of the app object        
